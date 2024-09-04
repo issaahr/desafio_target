@@ -6,3 +6,5 @@ while k<indice:
     k += 1
     soma += k
 print(soma)
+
+# O resultado será 91

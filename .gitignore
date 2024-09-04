@@ -1,0 +1,21 @@
+# Arquivos de cache do Python
+__pycache__/
+*.pyc
+*.py[cod]
+
+# Configurações do VSCode
+.vscode/
+
+# Arquivos do sistema operacional
+Thumbs.db
+
+# Ambientes virtuais
+venv/
+.env/
+
+# Arquivos temporários
+*.log
+*.tmp
+*~
+*.bak
+*.swp
