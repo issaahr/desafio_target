@@ -1,35 +1,47 @@
 import json
 
-def analisar_faturamento(dados):
-    # Filtrar apenas os dias com faturamento
-    faturamentos = [dia['valor'] for dia in dados if dia['valor'] > 0]
+def calcular_menor_maior_faturamento(dados):
+    """Calcula o menor e o maior valor de faturamento da lista de dados."""
+    valores = [dia['valor'] for dia in dados if dia['valor'] > 0]
     
-    if not faturamentos:
-        return None, None, 0
-
-    menor_faturamento = min(faturamentos)
-    maior_faturamento = max(faturamentos)
-    media_faturamento = sum(faturamentos) / len(faturamentos)
+    if not valores:
+        return None, None
     
-    dias_acima_da_media = sum(1 for dia in dados if dia['valor'] > media_faturamento)
-
-    return menor_faturamento, maior_faturamento, dias_acima_da_media
-
-def main():
-    # Caminho para o arquivo JSON
-    caminho_arquivo = 'dados.json'
+    menor_faturamento = min(valores)
+    maior_faturamento = max(valores)
     
-    # Ler dados do arquivo JSON
+    return menor_faturamento, maior_faturamento
+
+def calcular_media_e_dias_acima(dados):
+    """Calcula a média mensal e o número de dias com faturamento acima da média."""
+    valores = [dia['valor'] for dia in dados if dia['valor'] > 0]
+    
+    if not valores:
+        return 0, 0
+    
+    media_faturamento = sum(valores) / len(valores)
+    dias_acima_media = sum(1 for dia in dados if dia['valor'] > media_faturamento)
+    
+    return media_faturamento, dias_acima_media
+
+
+# Caminho para o arquivo JSON
+caminho_arquivo = 'terceira_questao/dados.json'
+    
+# Carregar os dados do arquivo JSON diretamente
+try:
     with open(caminho_arquivo, 'r') as arquivo:
         dados = json.load(arquivo)
+except FileNotFoundError:
+    print(f"O arquivo '{caminho_arquivo}' não foi encontrado.")
     
-    # Analisar os dados
-    menor, maior, dias_acima = analisar_faturamento(dados)
-
-    # Exibir resultados
-    print(f"Menor valor de faturamento: {menor}")
-    print(f"Maior valor de faturamento: {maior}")
-    print(f"Número de dias com faturamento acima da média: {dias_acima}")
-
-if __name__ == "__main__":
-    main()
+# Calcular menor e maior faturamento
+menor_faturamento, maior_faturamento = calcular_menor_maior_faturamento(dados)
+    
+# Calcular média mensal e dias acima da média
+media_faturamento, dias_acima_media = calcular_media_e_dias_acima(dados)
+    
+# Exibir os resultados
+print(f"Menor valor de faturamento: {menor_faturamento:.2f}")
+print(f"Maior valor de faturamento: {maior_faturamento:.2f}")
+print(f"Número de dias com faturamento acima da média mensal: {dias_acima_media}")
